@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang='en-GB'>
+<head>
+	<meta charset='utf-8'>
+</head>
+
+<body>
+
+<%= codeobject %>
+
+<figure class="interactive" data-interactive="http://path/to/interactive/boot.js">
+    <p>Dummy content.</p>
+</figure>
+
+<script>
+    curl = { apiName: "require", apiContext: window.$namespace };
+</script>
+<script src="<%= projectUrl %><%= versionDir %>js/lib/curl.js"></script>
+
+<script>
+    require(['boot.js'], function(Interactive) {
+        var el = document.querySelector('.interactive');
+        var context = window;
+        var config = {};
+        var mediator = {};
+
+        Interactive.boot(el, context, config, mediator);
+    });
+</script>
+
+
+</body>
+</html>

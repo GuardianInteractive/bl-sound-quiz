@@ -1,0 +1,1 @@
+This folder is for assets used by the project. Images, sounds, etc. Anything that is not stylesheets, data or javascript.
