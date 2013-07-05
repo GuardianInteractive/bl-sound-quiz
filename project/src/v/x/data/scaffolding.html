@@ -1,5 +1,19 @@
-<div class="GI_bloody_lung">
-    <div class="play_btn">
-        test
+<div class="GI_BL_wrapper">
+    <div>
+        Round
+        <span id="currentRound"><%= roundCount %></span>
+        /<span id="totalRounds"><%= totalRounds %></span>
+    </div>
+
+    <button id="playButton">Play audio</button>
+
+    <div id="question_wrapper">
+        <p id="question"><%= question %></p>
+
+        <div>
+            <button id="answer1" class="answer_btn">Milk</button>
+            <button id="answer2" class="answer_btn">Urine</button>
+            <button id="answer3" class="answer_btn">Blood</button>
+        </div>
     </div>
 </div>

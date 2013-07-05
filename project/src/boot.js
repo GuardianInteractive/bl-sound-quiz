@@ -56,16 +56,17 @@ define([], function() {
          **/
         boot: function (el, context, config, mediator) {
             var cfg = {
-                baseUrl: '<%= projectUrl %><%= versionDir %>js',
+                baseUrl: '<%= projectUrl %><%= versionDir %>',
                 paths: {
-                    'Howl': 'lib/howler',
-                    'jquery': 'lib/jquery',
-                    '_': 'lib/lodash'
+                    'Howl': 'js/lib/howler',
+                    'jquery': 'js/lib/jquery',
+                    '_': 'js/lib/lodash'
                 }
             };
 
-            require(cfg, ['app']).then(function(App) {
-                App.start(el);
+            require(cfg, ['js/app', 'js/app/gui']).then(function(App, Gui) {
+                Gui.setup(el);
+                App.start();
             });
         }
     };
