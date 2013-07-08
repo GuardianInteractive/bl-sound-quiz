@@ -35,7 +35,7 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         _buttons = [];
 
         _.each(roundData.options, function (option, index) {
-            var btn = _$question.find('.GI_BLG_answer' + (index + 1));
+            var btn = _$question.find('.GI_BL_answer' + (index + 1));
             _buttons.push(btn);
 
             if (roundData.answer === index) {
@@ -127,11 +127,11 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         });
         _$el.append(cssElm);
 
-        _$question = _$el.find('.GI_BLG_question_wrapper');
+        _$question = _$el.find('.GI_BL_question_wrapper');
         _$sound = _$el.find('.GL_BL_play_btn');
-        _$roundWrapper = _$el.find('.GI_BLG_round_wrapper');
-        _$answerWrapper = _$el.find('.GI_BLG_answer_wrapper');
-        _$endWrapper = _$el.find('.GI_BLG_end_wrapper');
+        _$roundWrapper = _$el.find('.GI_BL_round_wrapper');
+        _$answerWrapper = _$el.find('.GI_BL_answer_wrapper');
+        _$endWrapper = _$el.find('.GI_BL_end_wrapper');
         _$score = _$el.find('.GI_BL_score_value');
         _$roundCount = _$el.find('.GI_BL_total_rounds');
         _$currentRound = _$el.find('.GI_BL_round_count');

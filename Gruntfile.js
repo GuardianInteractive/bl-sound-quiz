@@ -38,9 +38,9 @@ module.exports = function(grunt) {
         // Deployment-related stuff
         guid: '00775389-9d61-4e74-b3f8-ce45e8fc7235',
 
-        baseUrl: 'http://interactive.guim.co.uk/',
+        baseUrl: 'http://interactive.guim.co.uk/world/2012/may/10/obama-same-sex-marriage-share/',
 
-        projectPath: '2013/jul/guess-the-sound/',
+        projectPath: '',
         version: 'x',
         versionDir: 'v/<%= version %>/',
         versionPath: '<%= projectPath %><%= versionDir %>',
@@ -120,19 +120,22 @@ module.exports = function(grunt) {
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: 'build/v/x/js/',
+                    baseUrl: './build/v/x/',
                     out: 'build/v/x/js/main.js',
-                    name: 'almond',
-                    include: 'main',
-                    mainConfigFile: 'build/v/x/js/main.js',
-                    wrap: true,
-                    optimize: 'uglify2',
-                    uglify2: {
-                        compress: {
-                            dead_code: true,
-                            conditionals: true // e.g. rewrite `if ( <%= production %> ) { doX(); } else { doY() }` as `doX()`
-                        }
-                    }
+
+                    name: './build/boot.js',
+                    include: ['build/v/x/js/app/gui.js']
+
+                    //mainConfigFile: 'build/boot.js',
+
+//                    wrap: true,
+//                    optimize: 'uglify2',
+//                    uglify2: {
+//                        compress: {
+//                            dead_code: true,
+//                            conditionals: true // e.g. rewrite `if ( <%= production %> ) { doX(); } else { doY() }` as `doX()`
+//                        }
+//                    }
                 }
             }
         },
@@ -236,7 +239,11 @@ module.exports = function(grunt) {
             },
             build: {
                 root: 'project/src/v/x/data/',
-                dest: 'build/v/x/data/data.js'
+                dest: 'build/v/x/data/data.js',
+                options: {
+                    space: '\t',
+                    amd: true
+                }
             }
         },
 
@@ -348,6 +355,15 @@ module.exports = function(grunt) {
         shell: {
             open: {
                 command: 'open <%= projectUrl %>index.html'
+            },
+
+            s3: {
+                options: {
+                    stdout: true,
+                    stderr: true,
+                    failOnError: true
+                },
+                command:  's3cmd put -r ./build/ s3://gdn-cdn/world/2012/may/10/obama-same-sex-marriage-share/ --guess-mime-type --human-readable-sizes --add-header="Cache-Control:max-age=100" --acl-public'
             }
         }
 
@@ -408,12 +424,16 @@ module.exports = function(grunt) {
         'dir2json:build',
 
         // optimise JS
-        'requirejs',
+//        'requirejs',
+//
+//        // optimise JS and CSS from the root folder
+//        'cssmin:build',
+//        'uglify:build',
 
-        // optimise JS and CSS from the root folder
-        'cssmin:build',
-        'uglify:build',
+    ]);
 
+    grunt.registerTask( 's3push', [
+        'shell:s3'
     ]);
 
     // launch sequence

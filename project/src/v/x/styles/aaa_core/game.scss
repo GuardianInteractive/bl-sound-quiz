@@ -1,31 +1,42 @@
 @import "base";
 
+$break-landscape: 600px;
+$green: #6CA843;
+$btn-padding: 0.5rem;
+
 .GI_BL_wrapper {
-  border: 2px dashed red;
+
+  * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
   background: #000;
   color: #FFF;
-  max-width: 360px;
+  overflow: hidden;
 
-  .GI_BLG_question_wrapper {
-    margin: 0.7rem;
+  .GI_BL_question_wrapper {
+    padding: 0 0.7rem;
 
-    .GI_BLG_answer_btn {
+    @media (min-width: $break-landscape) {
+      width: 50%;
+      float: right;
+    }
+
+    .GI_BL_answer_btn {
       cursor: pointer;
-      background: #000bbb;
-      padding: 0.5rem;
+      background: #005689;
+      padding: $btn-padding;
       text-align: center;
       margin: 1rem 0;
 
       &.correct {
-        background-color: #0F0;
+        background-color: #6CA843;
       }
 
       &.wrong {
-        background: #F00;
+        background: #D84B27;
       }
 
       &.disabled {
-        background: #999;
+        background: #B3B3B4;
       }
     }
   }
@@ -59,14 +70,48 @@
 
     .GL_BL_play_btn {
       display: block;
-      width: 5rem;
-      height: 5rem;
+      width: 90px;
+      height: 90px;
       margin: 0 auto;
+      cursor: pointer;
+      background: transparent url('../files/images/button@1x.png') 0 0;
+
+      @media (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) {
+          width: 210px;
+          height: 210px;
+          background: transparent url('../files/images/button@2x.png') 0 0;
+      }
+    }
+
+    @media (min-width: $break-landscape) {
+      width: 50%;
+      float: left;
+    }
+  }
+
+  .GI_BL_answer_wrapper {
+    .GI_BL_answer_image {
+      background-size: cover;
+      background-position: 50% 50%;
+      height: 400px;
+      width: 100%;
+
+    }
+    .GI_BL_answer_description {
+      margin: 1rem;
+    }
+    .GI_BL_next {
+      padding: $btn-padding;
+      background-color: $green;
+      text-align: right;
+      font-family: sans-serif;
       cursor: pointer;
     }
   }
 
-  .GI_BLG_end_wrapper {
+
+  .GI_BL_end_wrapper {
     background-color: #EEE;
     color: #999;
 
