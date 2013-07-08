@@ -64,9 +64,9 @@ define([], function() {
                 }
             };
 
-            require(cfg, ['js/app', 'js/app/gui']).then(function(App, Gui) {
+
+            require(cfg, ['js/app/gui']).then(function(Gui) {
                 Gui.setup(el);
-                App.start();
             });
         }
     };

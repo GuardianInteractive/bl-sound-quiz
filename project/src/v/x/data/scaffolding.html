@@ -1,19 +1,19 @@
 <div class="GI_BL_wrapper">
-    <div>
-        Round
-        <span id="currentRound"><%= roundCount %></span>
-        /<span id="totalRounds"><%= totalRounds %></span>
-    </div>
+    <div class="GI_BL_header">
+        <div class="GI_BL_rounds">
+            Round
+            <span class="GI_BL_round_count"></span>
+            /<span class="GI_BL_total_rounds"></span>
+        </div>
 
-    <button id="playButton">Play audio</button>
-
-    <div id="question_wrapper">
-        <p id="question"><%= question %></p>
-
-        <div>
-            <button id="answer1" class="answer_btn">Milk</button>
-            <button id="answer2" class="answer_btn">Urine</button>
-            <button id="answer3" class="answer_btn">Blood</button>
+        <div class="GI_BL_score">
+            Score <span class="GI_BL_score_value"></span>
         </div>
     </div>
+
+    <div class="GI_BL_audio_wrapper">
+        <button class="GL_BL_play_btn">Play sound</button>
+    </div>
+
+    <div class="GI_BLG_question_wrapper"></div>
 </div>

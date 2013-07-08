@@ -5,19 +5,28 @@
  * Time: 17:42
  * To change this template use File | Settings | File Templates.
  */
-define(['js/app/rounds', 'Howl'], function (Rounds, Howl) {
+define([], function () {
     'use strict';
 
+    var _playerScore = 0;
+    var _numAttempts  = 0;
+
     function correctAnswer() {
-        console.log('correct');
+        _playerScore = 2 - _numAttempts;
+        _numAttempts = 0;
     }
 
     function wrongAnswer() {
-        console.log('wrong');
+        _numAttempts += 1;
+    }
+
+    function getScore() {
+        return _playerScore;
     }
 
     return {
         wrongAnswer: wrongAnswer,
-        correctAnswer: correctAnswer
+        correctAnswer: correctAnswer,
+        getScore: getScore
     };
 });
