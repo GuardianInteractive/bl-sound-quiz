@@ -58,7 +58,7 @@ define([], function() {
             image: 'path/to/image.jpg',
             audio: {
                 mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/3_pigs_lungs_beaten.mp3',
-                ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/3_pigs_lungs_beaten.mp3'
+                ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/3_pigs_lungs_beaten.ogg'
             },
             questions: [
                 {

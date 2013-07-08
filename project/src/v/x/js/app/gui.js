@@ -73,12 +73,12 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     }
 
     function _nextQuestion() {
+        _updateScore();
         if (Rounds.isLastQuestion()) {
             // show answer screen.
             _showAnswer();
         } else {
             Rounds.nextQuestion();
-            _updateScore();
             _createQuestion();
         }
     }
