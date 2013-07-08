@@ -2,7 +2,7 @@
  *
  *
  */
-define(['Howl', 'js/app/rounds'], function(Howl, Rounds) {
+define(['Howl', 'js/app/rounds'], function (Howl, Rounds) {
     'use strict';
     var _sound = null;
 

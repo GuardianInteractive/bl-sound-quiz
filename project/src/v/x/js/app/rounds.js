@@ -1,4 +1,4 @@
-define(['_'], function(_) {
+define(['_'], function (_) {
     var _currentRound = 0;
     var _currentQuestion = 0;
 
@@ -114,15 +114,15 @@ define(['_'], function(_) {
     }
 
     function isLastQuestion() {
-        return (_currentQuestion === getRound().questions.length -1);
+        return (_currentQuestion === getRound().questions.length - 1);
     }
 
     function isLastRound() {
-        return (_currentRound > getRoundCount() -1);
+        return (_currentRound > getRoundCount() - 1);
     }
 
     function getTotalQuestionCount() {
-        return _.reduce(_rounds, function(memo, round) {
+        return _.reduce(_rounds, function (memo, round) {
             return memo + round.questions.length;
         }, 0);
     }

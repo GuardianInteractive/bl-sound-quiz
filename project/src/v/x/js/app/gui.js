@@ -1,7 +1,7 @@
 /**
  *
  */
-define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game'], function($, _, Data, Rounds, Audio, Game) {
+define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game'], function ($, _, Data, Rounds, Audio, Game) {
     'use strict';
 
     var CSS_PATH = '<%= projectUrl %><%= versionDir %>styles/min.css';
@@ -34,20 +34,20 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         _$question.html(template);
         _buttons = [];
 
-        _.each(roundData.options, function(option, index) {
+        _.each(roundData.options, function (option, index) {
             var btn = _$question.find('.GI_BLG_answer' + (index + 1));
             _buttons.push(btn);
 
             if (roundData.answer === index) {
-                btn.bind('click', function() { _correctAnswer(btn); });
+                btn.bind('click', function () { _correctAnswer(btn); });
             } else {
-                btn.bind('click', function() { _wrongAnswer(btn); });
+                btn.bind('click', function () { _wrongAnswer(btn); });
             }
         });
     }
 
     function _correctAnswer(elm) {
-        _.each(_buttons, function(button) {
+        _.each(_buttons, function (button) {
             button.off();
         });
         elm.addClass('correct');
@@ -58,7 +58,7 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     function _wrongAnswer(elm) {
         elm.off();
         elm.addClass('wrong');
-        setTimeout(function() {
+        setTimeout(function () {
             elm.removeClass('wrong');
             elm.addClass('disabled');
         }, BUTTON_DELAY);
@@ -69,7 +69,7 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     function _showAnswer() {
         _$roundWrapper.hide();
         var roundData = Rounds.getRound();
-        _$answerWrapper.html( _.template(Data.answer, {
+        _$answerWrapper.html(_.template(Data.answer, {
                 imageURL: roundData.image,
                 answer: roundData.description
             }));

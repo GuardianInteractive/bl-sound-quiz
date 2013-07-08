@@ -1,5 +1,5 @@
 define(['js/app/audio'],
-    function (Audio) {
+    function () {
     'use strict';
 
 //    console.log('in app.js BEFORE setup()');
