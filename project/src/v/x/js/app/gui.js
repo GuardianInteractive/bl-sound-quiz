@@ -4,6 +4,7 @@
 define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game'], function($, _, Data, Rounds, Audio, Game) {
     'use strict';
 
+    var CSS_PATH = '<%= projectUrl %><%= versionDir %>styles/min.css';
     var _$el = null;
     var _$sound = null;
     var _$score = null;
@@ -83,8 +84,9 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     }
 
     function _nextRound() {
-        _$answerWrapper.hide();
+        Audio.stopSound();
         Rounds.nextRound();
+        _$answerWrapper.hide();
 
         if (Rounds.isLastRound()) {
             // show end screen
@@ -101,6 +103,13 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         _$el.html(Data.scaffolding);
         _$el.append(Data.audio);
 
+        var cssElm = $('<link>', {
+            href: CSS_PATH,
+            rel: 'stylesheet',
+            type: 'text/css'
+        });
+        _$el.append(cssElm);
+
         _$question = _$el.find('.GI_BLG_question_wrapper');
         _$sound = _$el.find('.GL_BL_play_btn');
         _$roundWrapper = _$el.find('.GI_BLG_round_wrapper');
@@ -115,6 +124,7 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     }
 
     function setupRound() {
+        Audio.updateSound();
         _setSound();
         _updateScore();
         _createQuestion();

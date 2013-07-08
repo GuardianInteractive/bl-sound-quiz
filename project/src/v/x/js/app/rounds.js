@@ -57,8 +57,8 @@ define([], function() {
             description: 'it\'s a pig\'s lungs being bashed',
             image: 'path/to/image.jpg',
             audio: {
-                mp3: 'path/to/audio.mp3',
-                ogg: 'path/to/audio.ogg'
+                mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/3_pigs_lungs_beaten.mp3',
+                ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/3_pigs_lungs_beaten.mp3'
             },
             questions: [
                 {

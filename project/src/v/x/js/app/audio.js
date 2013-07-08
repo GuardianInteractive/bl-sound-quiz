@@ -7,6 +7,12 @@ define(['Howl', 'js/app/rounds'], function(Howl, Rounds) {
     var _sound = null;
 
     function updateSound() {
+        if (_sound) {
+            _sound.stop();
+        }
+
+        _sound = null;
+
         var roundData = Rounds.getRound();
         _sound = new Howl({
             urls: [
@@ -17,11 +23,17 @@ define(['Howl', 'js/app/rounds'], function(Howl, Rounds) {
     }
 
     function playSound() {
+        _sound.stop();
         _sound.play();
+    }
+
+    function stopSound() {
+        _sound.stop();
     }
 
     return {
         playSound: playSound,
+        stopSound: stopSound,
         updateSound: updateSound
     };
 });
