@@ -117,6 +117,10 @@ define([], function() {
         return (_currentQuestion === getRound().questions.length -1);
     }
 
+    function isLastRound() {
+        return (_currentRound > getRoundCount() -1);
+    }
+
 
     return {
         getRound: getRound,
@@ -125,6 +129,7 @@ define([], function() {
         getQuestion: getQuestion,
         nextQuestion: nextQuestion,
         getCurrentRoundCount: getCurrentRoundCount,
-        isLastQuestion: isLastQuestion
+        isLastQuestion: isLastQuestion,
+        isLastRound: isLastRound
     };
 });

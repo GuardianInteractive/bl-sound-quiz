@@ -12,6 +12,7 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     var _$currentRound = null;
     var _$roundWrapper = null;
     var _$answerWrapper = null;
+    var _$endWrapper = null;
 
     function _setSound() {
         _$sound.bind('click', Audio.playSound);
@@ -82,10 +83,17 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     }
 
     function _nextRound() {
-        Rounds.nextRound();
         _$answerWrapper.hide();
-        _$roundWrapper.show();
-        setupRound();
+        Rounds.nextRound();
+
+        if (Rounds.isLastRound()) {
+            // show end screen
+            _$endWrapper.html(_.template(Data.end, {}));
+            _$endWrapper.show();
+        } else {
+            _$roundWrapper.show();
+            setupRound();
+        }
     }
 
     function setup(el) {
@@ -97,6 +105,7 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         _$sound = _$el.find('.GL_BL_play_btn');
         _$roundWrapper = _$el.find('.GI_BLG_round_wrapper');
         _$answerWrapper = _$el.find('.GI_BLG_answer_wrapper');
+        _$endWrapper = _$el.find('.GI_BLG_end_wrapper');
         _$score = _$el.find('.GI_BL_score_value');
         _$roundCount = _$el.find('.GI_BL_total_rounds');
         _$currentRound = _$el.find('.GI_BL_round_count');
