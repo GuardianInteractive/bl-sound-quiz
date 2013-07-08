@@ -1,11 +1,11 @@
-define([], function() {
+define(['_'], function(_) {
     var _currentRound = 0;
     var _currentQuestion = 0;
 
     var _rounds = [
         {
             description: 'it\'s pig\'s blood being poured into a bucket',
-            image: 'path/to/image.jpg',
+            image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
             audio: {
                 mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/2_pig_blood_bucket.mp3',
                 ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/2_pig_blood_bucket.ogg'
@@ -30,7 +30,7 @@ define([], function() {
         },
         {
             description: '***GUN SHOT***',
-            image: 'path/to/image.jpg',
+            image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
             audio: {
                 mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/1_gun_shots.mp3',
                 ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/1_gun_shots.ogg'
@@ -55,7 +55,7 @@ define([], function() {
         },
         {
             description: 'it\'s a pig\'s lungs being bashed',
-            image: 'path/to/image.jpg',
+            image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
             audio: {
                 mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/3_pigs_lungs_beaten.mp3',
                 ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/3_pigs_lungs_beaten.ogg'
@@ -121,6 +121,12 @@ define([], function() {
         return (_currentRound > getRoundCount() -1);
     }
 
+    function getTotalQuestionCount() {
+        return _.reduce(_rounds, function(memo, round) {
+            return memo + round.questions.length;
+        }, 0);
+    }
+
 
     return {
         getRound: getRound,
@@ -130,6 +136,7 @@ define([], function() {
         nextQuestion: nextQuestion,
         getCurrentRoundCount: getCurrentRoundCount,
         isLastQuestion: isLastQuestion,
-        isLastRound: isLastRound
+        isLastRound: isLastRound,
+        getTotalQuestionCount: getTotalQuestionCount
     };
 });

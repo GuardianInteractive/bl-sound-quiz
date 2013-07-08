@@ -14,6 +14,9 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     var _$roundWrapper = null;
     var _$answerWrapper = null;
     var _$endWrapper = null;
+    var BUTTON_DELAY = 400;
+    var TRANSITION_DELAY = 700;
+    var _buttons = null;
 
     function _setSound() {
         _$sound.bind('click', Audio.playSound);
@@ -29,9 +32,11 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         });
 
         _$question.html(template);
+        _buttons = [];
 
         _.each(roundData.options, function(option, index) {
             var btn = _$question.find('.GI_BLG_answer' + (index + 1));
+            _buttons.push(btn);
 
             if (roundData.answer === index) {
                 btn.bind('click', function() { _correctAnswer(btn); });
@@ -42,23 +47,31 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     }
 
     function _correctAnswer(elm) {
-        elm.off();
+        _.each(_buttons, function(button) {
+            button.off();
+        });
         elm.addClass('correct');
         Game.correctAnswer();
-        _nextQuestion();
+        setTimeout(_nextQuestion, TRANSITION_DELAY);
     }
 
     function _wrongAnswer(elm) {
         elm.off();
         elm.addClass('wrong');
+        setTimeout(function() {
+            elm.removeClass('wrong');
+            elm.addClass('disabled');
+        }, BUTTON_DELAY);
+
         Game.wrongAnswer();
     }
 
     function _showAnswer() {
         _$roundWrapper.hide();
+        var roundData = Rounds.getRound();
         _$answerWrapper.html( _.template(Data.answer, {
-                imageURL: '',
-                answer: ''
+                imageURL: roundData.image,
+                answer: roundData.description
             }));
         _$answerWrapper.find('.GI_BL_next').bind('click', _nextRound);
         _$answerWrapper.show();
@@ -90,7 +103,11 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
 
         if (Rounds.isLastRound()) {
             // show end screen
-            _$endWrapper.html(_.template(Data.end, {}));
+            _$endWrapper.html(_.template(Data.end, {
+                playerDescription: '**** GOOD LISTENER *****',
+                score: Game.getScore(),
+                possibleScore: Game.getMaxScore()
+            }));
             _$endWrapper.show();
         } else {
             _$roundWrapper.show();

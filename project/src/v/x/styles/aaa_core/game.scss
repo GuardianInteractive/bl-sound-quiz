@@ -2,4 +2,76 @@
 
 .GI_BL_wrapper {
   border: 2px dashed red;
+  background: #000;
+  color: #FFF;
+  max-width: 360px;
+
+  .GI_BLG_question_wrapper {
+    margin: 0.7rem;
+
+    .GI_BLG_answer_btn {
+      cursor: pointer;
+      background: #000bbb;
+      padding: 0.5rem;
+      text-align: center;
+      margin: 1rem 0;
+
+      &.correct {
+        background-color: #0F0;
+      }
+
+      &.wrong {
+        background: #F00;
+      }
+
+      &.disabled {
+        background: #999;
+      }
+    }
+  }
+
+
+  .GI_BL_header {
+    overflow: hidden;
+    font-family: sans-serif;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .GI_BL_rounds {
+    float: left;
+  }
+
+  .GI_BL_score {
+    color: #999;
+    font-size: 0.8rem;
+    float: right;
+  }
+
+  .GI_BL_score_value {
+    color: #FFF;
+    font-size: 1rem;
+  }
+
+  .GI_BL_audio_wrapper {
+    background: #333;
+    text-align: center;
+    padding: 2rem 0;
+
+    .GL_BL_play_btn {
+      display: block;
+      width: 5rem;
+      height: 5rem;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+  }
+
+  .GI_BLG_end_wrapper {
+    background-color: #EEE;
+    color: #999;
+
+    .GI_BL_result {
+      color: #222;
+    }
+  }
 }
