@@ -37,18 +37,18 @@ define([], function() {
             },
             questions: [
                 {
-                    question: 'Is the liquid being poured',
-                    options: ['chemical', 'animal', 'human'],
+                    question: 'Type of sound',
+                    options: ['organic', 'mechanical', 'space'],
                     answer: 1
                 },
                 {
-                    question: 'Is the setting',
-                    options: ['dairy farm', 'abattoir', 'vet surgery'],
-                    answer: 1
+                    question: 'location',
+                    options: ['moon', 'kitchen', 'field'],
+                    answer: 2
                 },
                 {
-                    question: 'Is the animal',
-                    options: ['pig', 'horse', 'cow'],
+                    question: 'flavour',
+                    options: ['orange', 'chocolate', 'fudge'],
                     answer: 0
                 }
             ]
@@ -92,6 +92,7 @@ define([], function() {
 
     function nextRound() {
         _currentRound += 1;
+        _currentQuestion = 0;
         return getRound();
     }
 
@@ -101,7 +102,7 @@ define([], function() {
     }
 
     function getRoundCount() {
-        return _rounds.length + 1;
+        return _rounds.length;
     }
 
     function getQuestion() {
@@ -112,6 +113,9 @@ define([], function() {
         return _currentRound + 1;
     }
 
+    function isLastQuestion() {
+        return (_currentQuestion === getRound().questions.length -1);
+    }
 
 
     return {
@@ -120,6 +124,7 @@ define([], function() {
         getRoundCount: getRoundCount,
         getQuestion: getQuestion,
         nextQuestion: nextQuestion,
-        getCurrentRoundCount: getCurrentRoundCount
+        getCurrentRoundCount: getCurrentRoundCount,
+        isLastQuestion: isLastQuestion
     };
 });

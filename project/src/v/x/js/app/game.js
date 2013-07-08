@@ -12,12 +12,14 @@ define([], function () {
     var _numAttempts  = 0;
 
     function correctAnswer() {
-        _playerScore = 2 - _numAttempts;
+        _playerScore += 2 - _numAttempts;
         _numAttempts = 0;
+        console.log('Correct answer. Score = %d, attempt = %d', _playerScore, _numAttempts);
     }
 
     function wrongAnswer() {
         _numAttempts += 1;
+        console.log('Wrong answer. Score = %d, attempt = %d', _playerScore, _numAttempts);
     }
 
     function getScore() {
