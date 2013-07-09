@@ -141,7 +141,7 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     }
 
     function setupRound() {
-        Audio.updateSound();
+        Audio.setup();
         _setSound();
         _updateScore();
         _createQuestion();

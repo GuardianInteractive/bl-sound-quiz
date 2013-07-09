@@ -66,7 +66,6 @@ define([], function() {
 
 
             require(cfg, ['js/app/gui']).then(function(Gui) {
-                console.log('boot.js .then()', Gui, el, el[0]);
                 Gui.setup(el);
             });
         }
