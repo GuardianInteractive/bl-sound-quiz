@@ -32,7 +32,35 @@ define(['_'], function (_) {
             ]
         },
         {
-            description: '***GUN SHOT***',
+            description: 'Blowing air through the prevention of terrorism act in the houses of parliament',
+            image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
+            audio: {
+                duration: 32.15,
+                files: {
+                    mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/5_the_prevention_of_terrorism.mp3',
+                    ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/5_the_prevention_of_terrorism.ogg'
+                }
+            },
+            questions: [
+                {
+                    question: 'where are we?',
+                    options: ['houses of parliament', 'london eye', 'Paddington train station'],
+                    answer: 0
+                },
+                {
+                    question: 'what\'s happening?',
+                    options: ['rubbing a wooden chair', 'playing an instrument', 'blowing air over paper'],
+                    answer: 2
+                },
+                {
+                    question: 'what\'s on the paper?',
+                    options: ['disqualification act ', 'same sex couples bill ', 'prevention of terrorism act'],
+                    answer: 2
+                }
+            ]
+        },
+        {
+            description: 'Gun shots',
             image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
             audio: {
                 duration: 1.88,
@@ -43,18 +71,18 @@ define(['_'], function (_) {
             },
             questions: [
                 {
-                    question: 'Type of sound',
-                    options: ['organic', 'mechanical', 'space'],
+                    question: 'Is the type of sound',
+                    options: ['organic', 'man made', 'synthesised'],
                     answer: 1
                 },
                 {
-                    question: 'location',
-                    options: ['moon', 'kitchen', 'field'],
+                    question: 'Is the material',
+                    options: ['wood', 'plastic', 'metal'],
                     answer: 2
                 },
                 {
-                    question: 'flavour',
-                    options: ['orange', 'chocolate', 'fudge'],
+                    question: 'Is the device',
+                    options: ['gun', 'hammer', 'lift'],
                     answer: 0
                 }
             ]
