@@ -2,7 +2,7 @@
  *
  *
  */
-define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
+define(['Howl', 'js/app/rounds'], function (Howl, Rounds) {
     'use strict';
     var _sound = null;
     var _circ = Math.PI * 2;
@@ -13,34 +13,6 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
     var _height = null;
     var _animRequest = null;
     var _duration = null;
-    var _retina = window.devicePixelRatio > 1;
-
-    // RequestAnimationFrame polyfill
-    // http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
-    (function() {
-        var lastTime = 0;
-        var vendors = ['webkit', 'moz'];
-        for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-            window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-            window.cancelAnimationFrame =
-                window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
-        }
-
-        if (!window.requestAnimationFrame)
-            window.requestAnimationFrame = function(callback, element) {
-                var currTime = new Date().getTime();
-                var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-                var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-                    timeToCall);
-                lastTime = currTime + timeToCall;
-                return id;
-            };
-
-        if (!window.cancelAnimationFrame)
-            window.cancelAnimationFrame = function(id) {
-                clearTimeout(id);
-            };
-    }());
 
     function updateSound() {
         if (_sound) {
@@ -79,16 +51,20 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
     }
 
     function stopSound() {
-        _sound.stop();
+        if (_sound) {
+            _sound.stop();
+            _stopAnimation();
+            _clearProgress();
+        }
     }
 
     function _drawProgress() {
-            _ctx.beginPath();
-            _ctx.strokeStyle = '#FFF';
-            _ctx.lineCap = 'square';
-            _ctx.closePath();
-            _ctx.fill();
-            _ctx.lineWidth = 8.2;
+        _ctx.beginPath();
+        _ctx.strokeStyle = '#FFF';
+        _ctx.lineCap = 'square';
+        _ctx.closePath();
+        _ctx.fill();
+        _ctx.lineWidth = 8.2;
     }
 
     function _startAnimation() {
@@ -107,11 +83,11 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
 
         var current = _sound.pos() / _duration || 0;
         var radius = _width / 2.5;
-        _ctx.lineWidth = _width / 10 ;
+        _ctx.lineWidth = _width / 10;
 
         _ctx.clearRect(0, 0, _width, _height);
         _ctx.beginPath();
-        _ctx.arc(_width/2, _height/2, radius, -(_quart), ((_circ) * current) - _quart, false);
+        _ctx.arc(_width / 2, _height / 2, radius, -(_quart), ((_circ) * current) - _quart, false);
         _ctx.stroke();
     }
 
@@ -122,7 +98,6 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
         _height = _canvas.clientHeight;
         _canvas.setAttribute('width', _width);
         _canvas.setAttribute('height', _height);
-        console.log(_width, _height, _canvas.offsetHeight);
         _ctx = _canvas.getContext('2d');
         _drawProgress();
     }

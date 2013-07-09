@@ -19,6 +19,7 @@
         "console": true,
         "require": true,
         "define": true,
-        "setTimeout": true
+        "setTimeout": true,
+        "window": true
     }
 }

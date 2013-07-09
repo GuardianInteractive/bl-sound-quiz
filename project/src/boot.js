@@ -60,12 +60,13 @@ define([], function() {
                 paths: {
                     'Howl': 'js/lib/howler',
                     'jquery': 'js/lib/jquery',
-                    '_': 'js/lib/lodash'
+                    '_': 'js/lib/lodash',
+                    'animPoly': 'js/lib/animFramePolyfill'
                 }
             };
 
 
-            require(cfg, ['js/app/gui']).then(function(Gui) {
+            require(cfg, ['js/app/gui', 'animPoly']).then(function(Gui) {
                 Gui.setup(el);
             });
         }

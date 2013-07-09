@@ -2,8 +2,11 @@
 
 $break-landscape: 600px;
 $green: #6CA843;
-$btn-padding: 0.5rem;
+$btn-padding: 10px;
+$btn-margin: 15px;
 $edge-border: 10px;
+$sans-font:  'Guardian Sans Web', sans-serif;
+$serif-font: 'Guardian Egyptian Web', serif;
 
 .GI_BL_wrapper {
 
@@ -12,13 +15,24 @@ $edge-border: 10px;
   background: #000;
   color: #FFF;
   overflow: hidden;
+  font-size: 18px;
+
+  .GI_BL_round_wrapper {
+    position: relative;
+    overflow: hidden;
+  }
 
   .GI_BL_question_wrapper {
     padding: 0 0.7rem;
+    font-family: $serif-font;
 
     @media (min-width: $break-landscape) {
-      width: 50%;
+      width: 70%;
       float: right;
+    }
+
+    .GI_BL_question {
+      font-size: 21px;
     }
 
     .GI_BL_answer_btn {
@@ -26,7 +40,7 @@ $edge-border: 10px;
       background: #005689;
       padding: $btn-padding;
       text-align: center;
-      margin: 1rem 0;
+      margin: $btn-margin 0;
 
       &.correct {
         background-color: #6CA843;
@@ -44,9 +58,11 @@ $edge-border: 10px;
 
 
   .GI_BL_header {
+    font-family: $sans-font;
+    font-size: 18px;
     overflow: hidden;
-    font-family: sans-serif;
-    padding: 0.5rem 0.7rem;
+    padding: 6px 15px;
+    height: 36px;
   }
 
   .GI_BL_rounds {
@@ -55,13 +71,11 @@ $edge-border: 10px;
 
   .GI_BL_score {
     color: #999;
-    font-size: 0.8rem;
     float: right;
   }
 
   .GI_BL_score_value {
     color: #FFF;
-    font-size: 1rem;
   }
 
   .GI_BL_audio_wrapper {
@@ -89,21 +103,33 @@ $edge-border: 10px;
       background: transparent url('../files/images/play_button.png') 50% 50%;
       background-size: cover;
 
+
       @media (-webkit-min-device-pixel-ratio: 2),
         (min-resolution: 192dpi) {
           width: 210px;
           height: 210px;
           background-image: url('../files/images/play_buttonx2.png');
       }
+
+      @media (min-width: $break-landscape) {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -45px;
+        margin-top: -45px;
+      }
     }
 
     @media (min-width: $break-landscape) {
-      width: 50%;
-      float: left;
+      width: 30%;
+      position: absolute;
+      height: 100%;
     }
   }
 
   .GI_BL_answer_wrapper {
+    position: relative;
+
     .GI_BL_answer_image {
       background-size: cover;
       background-position: 50% 50%;
@@ -112,34 +138,67 @@ $edge-border: 10px;
 
     }
     .GI_BL_answer_description {
-      margin: 1rem;
+      margin: $btn-margin;
+      @media (min-width: $break-landscape) {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        padding: $btn-margin;
+        background: #000;
+      }
     }
     .GI_BL_next {
+      font-family: $sans-font;
       padding: $btn-padding;
       background-color: $green;
       text-align: right;
-      font-family: sans-serif;
       cursor: pointer;
     }
   }
 
 
   .GI_BL_end_wrapper {
-    background-color: #EEE;
+    background-color: #FFF;
     color: #999;
     display: none;
+    font-family: $serif-font;
 
     .GI_BL_result_text {
       padding: $edge-border;
     }
 
     .GI_BL_result_text p {
-      margin-top: 0;
-      margin-bottom: 0.7rem;
+      line-height: 24px;
     }
 
     .GI_BL_result {
       color: #222;
+    }
+
+    .GI_BL_social {
+      overflow: hidden;
+    }
+
+    .GI_BL_social_link {
+      background: transparent url(../files/images/social@1x.png) 0 0 no-repeat;
+      width:60px;
+      height: 36px;
+      cursor: pointer;
+      display: block;
+      float: left;
+      margin-right: 10px;
+    }
+
+    .GI_BL_twitter {
+      background-position: -160px 0;
+    }
+    .GI_BL_facebook {
+      background-position: -80px 0;
+    }
+
+    .GI_BL_google {
+      background-position: -240px 0;
     }
 
     .GI_BL_tracklist {
@@ -155,16 +214,19 @@ $edge-border: 10px;
       clear: both;
       overflow: hidden;
       padding: 15px;
+      font-family: $sans-font;
 
       .GI_BL_track_title {
         display: block;
         color: #FFF;
         font-weight: bold;
-        margin-left: 45px;
+        margin-left: 65px;
+        font-family: $serif-font;
+        margin-top: 3px;
 
         @media (-webkit-min-device-pixel-ratio: 2),
         (min-resolution: 192dpi) {
-          margin-left: 105px;
+          margin-left: 115px;
         }
       }
 
@@ -174,13 +236,13 @@ $edge-border: 10px;
         background-size: cover;
         margin-right: 10px;
         cursor: pointer;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
 
           @media (-webkit-min-device-pixel-ratio: 2),
           (min-resolution: 192dpi) {
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
           }
       }
 

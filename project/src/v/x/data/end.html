@@ -1,0 +1,39 @@
+<div class="GI_BL_result_text">
+    <p>
+        Hey, <%= playerDescription %>.<br>
+        You scored <span class="GI_BL_result"><%= score %> out of <%= possibleScore %>
+    </p>
+
+    <p>Share your results</p>
+    <p class="GI_BL_social">
+
+        <a class="GI_BL_facebook GI_BL_social_link"
+           target="_blank"
+           href="https://www.facebook.com/sharer/sharer.php?u=<%= url %>">
+        </a>
+
+        <a class="GI_BL_twitter GI_BL_social_link"
+           target="_blank"
+           href="https://twitter.com/intent/tweet?text=I+played+Guess+the+sound+and+scored+<%= score %>+of+<%= possibleScore %>+from&url=<%= url %>">
+       </a>
+
+        <a class="GI_BL_google GI_BL_social_link"
+           target="_blank"
+           href="https://plus.google.com/share?url=<%= url %>">
+        </a>
+    </p>
+
+    <p>Or listen again...</p>
+</div>
+
+<ol class="GI_BL_tracklist">
+    <% _.each(tracks, function(track, index) { %>
+        <li class="GI_BL_track">
+            <canvas class="GI_BL_circular_progress">"></canvas>
+            <p>
+                round <%= track.round %>
+                <span class="GI_BL_track_title"><%= track.description %></span>
+            </p>
+        </li>
+    <% }); %>
+</ol>

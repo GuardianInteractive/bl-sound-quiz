@@ -112,16 +112,28 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     function _showResults() {
         _$roundWrapper.hide();
 
+        var playerDescriptions = [
+            'did you even try?',
+            'so you\'re not completely tone deaf',
+            'you could distinguish a verdi baritone from a baryton-noble'
+        ];
+
+        var usersDescriptionIndex = Math.round(
+                (Game.getScore() / Game.getMaxScore()) * (playerDescriptions.length - 1)
+            );
+
+        console.log(usersDescriptionIndex);
 
         _$endWrapper.html(_.template(Data.end, {
-            playerDescription: '**** GOOD LISTENER *****',
+            playerDescription: playerDescriptions[usersDescriptionIndex],
             score: Game.getScore(),
             possibleScore: Game.getMaxScore(),
-            tracks: Rounds.getRounds()
+            tracks: Rounds.getRounds(),
+            url: encodeURIComponent('http://www.gu.com')
         }));
 
-        _.each(_$endWrapper.find('.GI_BL_circular_progress'), function(elm, index) {
-            $(elm).bind('click', function() { Audio.playTrack(index, this); });
+        _.each(_$endWrapper.find('.GI_BL_circular_progress'), function (elm, index) {
+            $(elm).bind('click', function () { Audio.playTrack(index, this); });
         });
 
         _$endWrapper.show();
@@ -149,14 +161,11 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         _$currentRound = _$el.find('.GI_BL_round_count');
         _$roundCount.html(Rounds.getRoundCount());
 
-        // DEBUG
-        _$el.find('.end').bind('click', _showResults);
-
         setupRound();
     }
 
     function setupRound() {
-        $('.GL_BL_play_progress').bind('click', function() {
+        $('.GL_BL_play_progress').bind('click', function () {
             Audio.setup(this);
             Audio.playSound();
         });
