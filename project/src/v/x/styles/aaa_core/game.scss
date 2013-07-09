@@ -72,6 +72,12 @@ $edge-border: 10px;
     .GL_BL_play_progress {
       width: 90px;
       height: 90px;
+
+      @media (-webkit-min-device-pixel-ratio: 2),
+          (min-resolution: 192dpi) {
+        width: 210px;
+        height: 210px;
+      }
     }
 
     .GL_BL_play_btn {
@@ -87,6 +93,7 @@ $edge-border: 10px;
         (min-resolution: 192dpi) {
           width: 210px;
           height: 210px;
+          background-image: url('../files/images/play_buttonx2.png');
       }
     }
 
@@ -154,6 +161,11 @@ $edge-border: 10px;
         color: #FFF;
         font-weight: bold;
         margin-left: 45px;
+
+        @media (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) {
+          margin-left: 105px;
+        }
       }
 
       .GI_BL_circular_progress {
@@ -162,6 +174,14 @@ $edge-border: 10px;
         background-size: cover;
         margin-right: 10px;
         cursor: pointer;
+        width: 40px;
+        height: 40px;
+
+          @media (-webkit-min-device-pixel-ratio: 2),
+          (min-resolution: 192dpi) {
+            width: 90px;
+            height: 90px;
+          }
       }
 
       &:first-child {

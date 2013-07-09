@@ -13,6 +13,7 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
     var _height = null;
     var _animRequest = null;
     var _duration = null;
+    var _retina = window.devicePixelRatio > 1;
 
     // RequestAnimationFrame polyfill
     // http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -118,9 +119,12 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
     function setup(elm) {
         updateSound();
         _canvas =  elm;
+        _width = _canvas.clientWidth;
+        _height = _canvas.clientHeight;
+        _canvas.setAttribute('width', _width);
+        _canvas.setAttribute('height', _height);
+        console.log(_width, _height, _canvas.offsetHeight);
         _ctx = _canvas.getContext('2d');
-        _width = _canvas.width;
-        _height = _canvas.height;
         _drawProgress();
     }
 

@@ -156,7 +156,10 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     }
 
     function setupRound() {
-        Audio.setup(document.querySelector('.GL_BL_play_progress'));
+        $('.GL_BL_play_progress').bind('click', function() {
+            Audio.setup(this);
+            Audio.playSound();
+        });
         _setSound();
         _updateScore();
         _createQuestion();
