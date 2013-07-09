@@ -16,12 +16,10 @@ define(['js/app/rounds'], function (Rounds) {
     function correctAnswer() {
         _playerScore += POINTS_PER_ROUND - _numAttempts;
         _numAttempts = 0;
-        console.log('Correct answer. Score = %d, attempt = %d', _playerScore, _numAttempts);
     }
 
     function wrongAnswer() {
         _numAttempts += 1;
-        console.log('Wrong answer. Score = %d, attempt = %d', _playerScore, _numAttempts);
     }
 
     function getScore() {

@@ -113,7 +113,6 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
         _ctx.beginPath();
         _ctx.arc(_width/2, _height/2, radius, -(_quart), ((_circ) * current) - _quart, false);
         _ctx.stroke();
-        $('.debug').text('Pos: ' + _sound.pos() + ' Duration:  ' + _sound._duration + ' Current: ' +  current);
     }
 
     function setup(elm) {
