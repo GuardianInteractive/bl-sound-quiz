@@ -12,6 +12,7 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
     var _width = null;
     var _height = null;
     var _animRequest = null;
+    var _duration = null;
 
     // RequestAnimationFrame polyfill
     // http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -50,12 +51,13 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
         var roundData = Rounds.getRound();
         _sound = new Howl({
             urls: [
-                roundData.audio.mp3,
-                roundData.audio.ogg
+                roundData.audio.files.mp3,
+                roundData.audio.files.ogg
             ],
             onend: _stopAnimation,
             onplay : _startAnimation
         });
+        _duration = roundData.audio.duration;
         _clearProgress();
     }
 
@@ -102,15 +104,15 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
     function _animate() {
         _animRequest = window.requestAnimationFrame(_animate);
 
-        var current = _sound.pos() / _sound._duration || 0;
+        var current = _sound.pos() / _duration || 0;
         var radius = _width / 2.5;
         _ctx.lineWidth = _width / 10 ;
-
 
         _ctx.clearRect(0, 0, _width, _height);
         _ctx.beginPath();
         _ctx.arc(_width/2, _height/2, radius, -(_quart), ((_circ) * current) - _quart, false);
         _ctx.stroke();
+        $('.debug').text('Pos: ' + _sound.pos() + ' Duration:  ' + _sound._duration + ' Current: ' +  current);
     }
 
     function setup(elm) {

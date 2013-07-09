@@ -7,8 +7,11 @@ define(['_'], function (_) {
             description: 'it\'s pig\'s blood being poured into a bucket',
             image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
             audio: {
-                mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/2_pig_blood_bucket.mp3',
-                ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/2_pig_blood_bucket.ogg'
+                duration: 17.39,
+                files: {
+                    mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/2_pig_blood_bucket.mp3',
+                    ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/2_pig_blood_bucket.ogg'
+                }
             },
             questions: [
                 {
@@ -32,8 +35,11 @@ define(['_'], function (_) {
             description: '***GUN SHOT***',
             image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
             audio: {
-                mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/1_gun_shots.mp3',
-                ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/1_gun_shots.ogg'
+                duration: 1.88,
+                files: {
+                    mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/1_gun_shots.mp3',
+                    ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/1_gun_shots.ogg'
+                }
             },
             questions: [
                 {
@@ -57,8 +63,11 @@ define(['_'], function (_) {
             description: 'it\'s a pig\'s lungs being bashed',
             image: '<%= projectUrl %><%= versionDir %>files/images/gir.jpg',
             audio: {
-                mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/3_pigs_lungs_beaten.mp3',
-                ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/3_pigs_lungs_beaten.ogg'
+                duration: 23.30,
+                files: {
+                    mp3: '<%= projectUrl %><%= versionDir %>files/audio/mp3/3_pigs_lungs_beaten.mp3',
+                    ogg: '<%= projectUrl %><%= versionDir %>files/audio/ogg/3_pigs_lungs_beaten.ogg'
+                }
             },
             questions: [
                 {
