@@ -86,8 +86,8 @@ define(['_'], function (_) {
      * @param roundNum {integer} Index of the round.
      * @returns {object} Round properties.
      */
-    function getRound() {
-        return _rounds[_currentRound];
+    function getRound(roundNum) {
+        return _rounds[roundNum || _currentRound];
     }
 
     function nextRound() {
@@ -127,9 +127,19 @@ define(['_'], function (_) {
         }, 0);
     }
 
+    function setRound(roundNum) {
+        _currentRound = roundNum;
+    }
+
+    function getRounds() {
+        return _rounds;
+    }
+
 
     return {
         getRound: getRound,
+        getRounds: getRounds,
+        setRound: setRound,
         nextRound: nextRound,
         getRoundCount: getRoundCount,
         getQuestion: getQuestion,

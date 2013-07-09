@@ -68,6 +68,13 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
         _sound.play();
     }
 
+    function playTrack(index, elm) {
+        _stopAnimation();
+        Rounds.setRound(index);
+        setup(elm);
+        playSound();
+    }
+
     function stopSound() {
         _sound.stop();
     }
@@ -96,25 +103,28 @@ define(['Howl', 'js/app/rounds'], function ( Howl, Rounds) {
         _animRequest = window.requestAnimationFrame(_animate);
 
         var current = _sound.pos() / _sound._duration || 0;
+        var radius = _width / 2.5;
+        _ctx.lineWidth = _width / 10 ;
+
+
         _ctx.clearRect(0, 0, _width, _height);
         _ctx.beginPath();
-        _ctx.arc(_width/2, _height/2, 37, -(_quart), ((_circ) * current) - _quart, false);
+        _ctx.arc(_width/2, _height/2, radius, -(_quart), ((_circ) * current) - _quart, false);
         _ctx.stroke();
     }
 
-    function setup() {
+    function setup(elm) {
         updateSound();
-        _canvas =  document.querySelector('.GL_BL_play_progress');
+        _canvas =  elm;
         _ctx = _canvas.getContext('2d');
         _width = _canvas.width;
         _height = _canvas.height;
         _drawProgress();
     }
 
-    //draw(30 / 100);
-
     return {
         playSound: playSound,
+        playTrack: playTrack,
         stopSound: stopSound,
         updateSound: updateSound,
         setup: setup

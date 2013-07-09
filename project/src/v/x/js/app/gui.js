@@ -102,17 +102,29 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         _$answerWrapper.hide();
 
         if (Rounds.isLastRound()) {
-            // show end screen
-            _$endWrapper.html(_.template(Data.end, {
-                playerDescription: '**** GOOD LISTENER *****',
-                score: Game.getScore(),
-                possibleScore: Game.getMaxScore()
-            }));
-            _$endWrapper.show();
+            _showResults();
         } else {
             _$roundWrapper.show();
             setupRound();
         }
+    }
+
+    function _showResults() {
+        _$roundWrapper.hide();
+
+
+        _$endWrapper.html(_.template(Data.end, {
+            playerDescription: '**** GOOD LISTENER *****',
+            score: Game.getScore(),
+            possibleScore: Game.getMaxScore(),
+            tracks: Rounds.getRounds()
+        }));
+
+        _.each(_$endWrapper.find('.GI_BL_circular_progress'), function(elm, index) {
+            $(elm).bind('click', function() { Audio.playTrack(index, this); });
+        });
+
+        _$endWrapper.show();
     }
 
     function setup(el) {
@@ -137,11 +149,14 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
         _$currentRound = _$el.find('.GI_BL_round_count');
         _$roundCount.html(Rounds.getRoundCount());
 
+        // DEBUG
+        _$el.find('.end').bind('click', _showResults);
+
         setupRound();
     }
 
     function setupRound() {
-        Audio.setup();
+        Audio.setup(document.querySelector('.GL_BL_play_progress'));
         _setSound();
         _updateScore();
         _createQuestion();
@@ -150,6 +165,5 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
 
     return {
         setup: setup
-        //showAnswer: showAnswer
     };
 });
