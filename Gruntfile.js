@@ -2,6 +2,10 @@
 module.exports = function(grunt) {
 
     'use strict';
+    var isDev = (grunt.option('dev')) || process.env.GRUNT_ISDEV === '1';
+    if (isDev) {
+        grunt.log.subhead('Running Grunt in DEV mode');
+    }
 
     //Create some functions for replacing tags in documents
     var tagReplacer = function(tags){
@@ -25,9 +29,9 @@ module.exports = function(grunt) {
     });
     //Tag replacer for build
     var buildTagReplacer = tagReplacer({
-        projectUrl: '<%= projectUrl %>',
-        versionDir: '<%= versionDir %>',
-        production: true,
+        projectUrl: (isDev) ? './' : '<%= projectUrl %>',
+        versionDir: (isDev) ? 'v/x/' : '<%= versionDir %>',
+        production: (isDev) ? false : true,
         codeobject: grunt.file.read( 'project/src/codeobject.html' ).replace( /<%=\s*projectUrl\s*%>/g, './' )
     });
 
@@ -52,8 +56,6 @@ module.exports = function(grunt) {
             bucket: 'gdn-cdn'
         },
 
-        // Main watch task. Kick this off by entering `grunt watch`. Now, any time you change the files below,
-        // the relevant tasks will execute
         watch: {
             sass: {
                 files: 'project/src/v/x/styles/**/*.scss',
@@ -82,8 +84,6 @@ module.exports = function(grunt) {
             }
         },
 
-
-        // Lint .js files in the src/js folder
         jshint: {
             files: ['project/src/v/x/js/**/*.js',
             //exclude these files:
@@ -91,56 +91,44 @@ module.exports = function(grunt) {
             options: { jshintrc: '.jshintrc' }
         },
 
-
-        // Clean up old cruft
         clean: {
             tmp: [ 'tmp' ],
             build: [ 'build' ],
             generated: [ 'generated' ]
         },
 
-
-        // Compile .scss files
         sass: {
-            dev: {
-                files: {
-                    'generated/v/x/styles/min.css': 'project/src/v/x/styles/**/*.scss'
-                },
-                options: { debugInfo: true }
+            files: {
+                'build/v/x/styles/min.css': 'project/src/v/x/styles/**/*.scss'
             },
-            build: {
-                files: {
-                    'build/v/x/styles/min.css': 'project/src/v/x/styles/**/*.scss'
-                },
-                options: { style: 'compressed' }
+            options: {
+                style: (isDev) ? '' : 'compressed',
+                debugInfo: (isDev) ? true : false
             }
         },
 
-        // Optimize JavaScript by minifying into a single file
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: './build/v/x/',
-                    out: 'build/v/x/js/main.js',
+                    baseUrl:    './project/src/v/x/',
+                    out:        './build/v/x/js/game.js',
+                    name:       'js/game',
 
-                    name: './build/boot.js',
-                    include: ['build/v/x/js/app/gui.js']
+                    paths: {
+                        'Howl': 'js/lib/howler',
+                        'jquery': 'js/lib/jquery',
+                        '_': 'js/lib/lodash',
+                        'animPoly': 'js/lib/animFramePolyfill'
+                    },
 
-                    //mainConfigFile: 'build/boot.js',
-
-//                    wrap: true,
-//                    optimize: 'uglify2',
-//                    uglify2: {
-//                        compress: {
-//                            dead_code: true,
-//                            conditionals: true // e.g. rewrite `if ( <%= production %> ) { doX(); } else { doY() }` as `doX()`
-//                        }
-//                    }
+                    optimize:                   (isDev) ? 'none' : 'uglify2',
+                    useSourceUrl:               (isDev) ? true : false,
+                    preserveLicenseComments:    false,
+                    wrap:                       (isDev) ? true : false
                 }
             }
         },
 
-        // Copy files
         copy: {
             files: {
                 files: [{
@@ -160,51 +148,9 @@ module.exports = function(grunt) {
                 options: {
                     processContent: buildTagReplacer
                 }
-            },
-            js: {
-                files: [{
-                    expand: true,
-                    cwd: 'project/src/v/x/js',
-                    src: ['**'],
-                    dest: 'build/v/x/js'
-                }],
-                options: {
-                    processContent: buildTagReplacer
-                }
-            },
-            filesdev: {
-                files: [{
-                    expand: true,
-                    cwd: 'project/src/v/x/files',
-                    src: ['**'],
-                    dest: 'generated/v/x/files/'
-                }]
-            },
-            rootdev: {
-                files: [{
-                    expand: true,
-                    cwd: 'project/src/',
-                    src: ['*.*'],
-                    dest: 'generated/'
-                }],
-                options: {
-                    processContent: devTagReplacer
-                }
-            },
-            jsdev: {
-                files: [{
-                    expand: true,
-                    cwd: 'project/src/v/x/js',
-                    src: ['**'],
-                    dest: 'generated/v/x/js'
-                }],
-                options: {
-                    processContent: devTagReplacer
-                }
-            },
+            }
         },
 
-        // Compress any CSS in the root folder
         cssmin: {
             build: {
                 files: [{
@@ -213,17 +159,6 @@ module.exports = function(grunt) {
                     src: '*.css',
                     dest: 'build/'
                 }]
-            }
-        },
-
-        // Minify any JS in the root folder
-        uglify: {
-            build: {
-                files: [{
-                expand: true,
-                cwd: 'build/',
-                src: '*.js',
-                dest: 'build/'}]
             }
         },
 
@@ -243,39 +178,6 @@ module.exports = function(grunt) {
                 options: {
                     space: '\t',
                     amd: true
-                }
-            }
-        },
-
-        // Launch a development server, which looks for requested URLs in the folders below
-        server: {
-            options: { port: 80 }, // you have to do `sudo grunt server` to use port 80 (fonts etc won't work unless it's port 80)
-            dev: {
-                options: {
-                    mappings: [
-                        {
-                            prefix: '/',
-                            src: [ 'generated/', 'project/root/' ]
-                        },
-                        {
-                            prefix: '/readme',
-                            src: function ( req ) {
-                                var markdown, html, style;
-
-                                markdown = grunt.file.read( 'README.md' );
-                                html = require( 'markdown' ).markdown.toHTML( markdown );
-
-                                style = "<style>body {font-family: 'Helvetica Neue', 'Arial'; font-size: 16px; color: #333; } pre { background-color: #eee; padding: 0.5em; } hr { margin: 2em 0 }</style>";
-
-                                return "<html><head>" + style + "</head><body>" + html + "</body></html>";
-                            }
-                        }
-                    ],
-                    variables: {
-                        projectUrl: '',
-                        versionDir: 'v/x', // replace occurrences of <%= versionDir %> with this during development
-                        production: 'false'
-                    }
                 }
             }
         },
@@ -392,11 +294,14 @@ module.exports = function(grunt) {
 
     // generate a runnable build for developing
     grunt.registerTask( 'generate', [
+        'clean:generated',
+        'clean:tmp',
         'copy:rootdev',
         'copy:jsdev',
         'copy:filesdev',
         'sass:dev',
-        'dir2json:dev'
+        'dir2json:dev',
+        'requirejs'
     ]);
 
     // default task - generate dev build and watch for changes
@@ -416,19 +321,16 @@ module.exports = function(grunt) {
 
         // copy files from project/files to build/v/x/files and from project root to build root
         'copy:root',
-        'copy:js',
         'copy:files',
 
         // build our min.css, without debugging info
-        'sass:build',
+        'sass',
         'dir2json:build',
 
         // optimise JS
-//        'requirejs',
-//
-//        // optimise JS and CSS from the root folder
+        'requirejs'
+
 //        'cssmin:build',
-//        'uglify:build',
 
     ]);
 
@@ -459,18 +361,4 @@ module.exports = function(grunt) {
         // point browser at newly deployed project
         'shell:open'
     ]);
-
-    grunt.registerTask( 'deploy:simulate', [
-        // clear the tmp folder
-        'clean:tmp',
-
-        // connect to S3, establish version number
-        'createS3Instance',
-        'downloadFromS3:manifest',
-        'verifyManifest',
-
-        // build project
-        'build'
-    ]);
-
 };
