@@ -20,14 +20,6 @@ module.exports = function(grunt) {
         return replacer;
     };
 
-    //Tag replacer for dev
-    var devTagReplacer = tagReplacer({
-        projectUrl: './',
-        versionDir: 'v/x/',
-        production: false,
-        codeobject: grunt.file.read( 'project/src/codeobject.html' ).replace( /<%=\s*projectUrl\s*%>/g, './' )
-    });
-    //Tag replacer for build
     var buildTagReplacer = tagReplacer({
         projectUrl: (isDev) ? './' : '<%= projectUrl %>',
         versionDir: (isDev) ? 'v/x/' : '<%= versionDir %>',
@@ -38,10 +30,7 @@ module.exports = function(grunt) {
 
 
     grunt.initConfig({
-
-        // Deployment-related stuff
         guid: '00775389-9d61-4e74-b3f8-ce45e8fc7235',
-
         baseUrl: 'http://interactive.guim.co.uk/world/2012/may/10/obama-same-sex-marriage-share/',
 
         projectPath: '',
@@ -92,25 +81,26 @@ module.exports = function(grunt) {
         },
 
         clean: {
-            tmp: [ 'tmp' ],
-            build: [ 'build' ],
-            generated: [ 'generated' ]
+            tmp:        ['tmp'],
+            build:      ['build']
         },
 
         sass: {
-            files: {
-                'build/v/x/styles/min.css': 'project/src/v/x/styles/**/*.scss'
-            },
-            options: {
-                style: (isDev) ? '' : 'compressed',
-                debugInfo: (isDev) ? true : false
+            common: {
+                files: {
+                    'build/v/x/styles/min.css': 'project/src/v/x/styles/**/*.scss'
+                },
+                options: {
+                    style:      (isDev) ? '' : 'compressed',
+                    debugInfo:  (isDev) ? true : false
+                }
             }
         },
 
         requirejs: {
             compile: {
                 options: {
-                    baseUrl:    './project/src/v/x/',
+                    baseUrl:    './tmp',
                     out:        './build/v/x/js/game.js',
                     name:       'js/game',
 
@@ -123,20 +113,39 @@ module.exports = function(grunt) {
 
                     optimize:                   (isDev) ? 'none' : 'uglify2',
                     useSourceUrl:               (isDev) ? true : false,
-                    preserveLicenseComments:    false,
-                    wrap:                       (isDev) ? true : false
+                    wrap:                       (isDev) ? true : false,
+                    preserveLicenseComments:    false
                 }
             }
         },
 
         copy: {
-            files: {
+            js: {
                 files: [{
                     expand: true,
-                    cwd: 'project/src/v/x/files',
+                    cwd: 'project/src/v/x/js',
                     src: ['**'],
-                    dest: 'build/v/x/files/'
-                }]
+                    dest: 'tmp/js/'
+                }],
+                options: {
+                    processContent: buildTagReplacer
+                }
+            },
+            files: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: 'project/src/v/x/files',
+                        src: ['**'],
+                        dest: 'build/v/x/files/'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['project/src/v/x/js/lib/curl.js'],
+                        dest: 'build/v/x/js/'
+                    }
+                ]
             },
             root: {
                 files: [{
@@ -164,17 +173,9 @@ module.exports = function(grunt) {
 
         // Combine contents of `project/src/v/x/data` into a single `data.json` file
         dir2json: {
-            dev: {
-                root: 'project/src/v/x/data/',
-                dest: 'generated/v/x/data/data.js',
-                options: {
-                    space: '\t',
-                    amd: true
-                }
-            },
             build: {
                 root: 'project/src/v/x/data/',
-                dest: 'build/v/x/data/data.js',
+                dest: 'tmp/data/data.js',
                 options: {
                     space: '\t',
                     amd: true
@@ -255,10 +256,6 @@ module.exports = function(grunt) {
 
         // shell commands
         shell: {
-            open: {
-                command: 'open <%= projectUrl %>index.html'
-            },
-
             s3: {
                 options: {
                     stdout: true,
@@ -281,66 +278,35 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-copy');
-
     grunt.loadNpmTasks('grunt-dir2json');
     grunt.loadNpmTasks('grunt-shell');
-
-
     // Guardian Interactive tasks
     grunt.loadNpmTasks('grunt-gui');
 
-
-
-
-    // generate a runnable build for developing
-    grunt.registerTask( 'generate', [
-        'clean:generated',
-        'clean:tmp',
-        'copy:rootdev',
-        'copy:jsdev',
-        'copy:filesdev',
-        'sass:dev',
-        'dir2json:dev',
-        'requirejs'
-    ]);
-
-    // default task - generate dev build and watch for changes
-    grunt.registerTask( 'default', [
-        'generate',
+    grunt.registerTask('default', [
+        'build',
         'watch'
     ]);
 
     // build task - link, compile, flatten, optimise, copy
-    grunt.registerTask( 'build', [
-        // clear out previous build
+    grunt.registerTask('build', [
         'clean:build',
         'clean:tmp',
-
-        //Lint js files!
         'jshint',
-
-        // copy files from project/files to build/v/x/files and from project root to build root
-        'copy:root',
-        'copy:files',
-
-        // build our min.css, without debugging info
-        'sass',
+        'sass:common',
+        'copy:js',
         'dir2json:build',
-
-        // optimise JS
-        'requirejs'
-
-//        'cssmin:build',
-
+        'requirejs',
+        'copy:root',
+        'copy:files'
     ]);
 
-    grunt.registerTask( 's3push', [
+    grunt.registerTask('s3push', [
         'shell:s3'
     ]);
 
     // launch sequence
-    grunt.registerTask( 'deploy', [
-        // clear the tmp folder
+    grunt.registerTask('deploy', [
         'clean:tmp',
 
         // connect to S3, establish version number

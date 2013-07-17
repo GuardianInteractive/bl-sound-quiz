@@ -16,10 +16,10 @@
 <script>
     curl = { apiName: "require", apiContext: window.$namespace };
 </script>
-<script src="<%= projectUrl %><%= versionDir %>js/lib/curl.js"></script>
+<script src="<%= projectUrl %><%= versionDir %>js/curl.js"></script>
 
 <script>
-    require(['boot.js'], function(Interactive) {
+    require(['<%= projectUrl %><%= versionDir %>boot.js'], function(Interactive) {
         var el = document.querySelector('.interactive');
         var context = window;
         var config = {};
