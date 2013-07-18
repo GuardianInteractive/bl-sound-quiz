@@ -5,6 +5,7 @@ define(['_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animP
     'use strict';
 
     var CSS_PATH = '<%= projectUrl %><%= versionDir %>styles/min.css';
+    var SOCIAL_GU_LINK = 'GU-SHORT-CODE';
     var _el = null;
     var _sound = null;
     var _score = null;
@@ -39,26 +40,27 @@ define(['_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animP
             _buttons.push(btn);
 
             if (roundData.answer === index) {
-                btn.addEventListener('click', function () { _correctAnswer(btn); }, false);
+                btn.addEventListener('click', _correctAnswer, false);
             } else {
-                btn.addEventListener('click', function () { _wrongAnswer(btn); }, false);
+                btn.addEventListener('click', _wrongAnswer, false);
             }
         });
     }
 
-    function _correctAnswer(elm) {
-//        _.each(_buttons, function (button) {
-//            // TODO: remove event listeners
-//            //button.removeEventListener();
-//        });
+    function _correctAnswer(event) {
+        var elm = event.target;
+        _.each(_buttons, function (button) {
+            button.removeEventListener('click', _correctAnswer, false);
+            button.removeEventListener('click', _wrongAnswer, false);
+        });
         elm.className += ' correct';
         Game.correctAnswer();
         setTimeout(_nextQuestion, TRANSITION_DELAY);
     }
 
-    function _wrongAnswer(elm) {
-        // TODO: Remove event listener
-        //elm.off();
+    function _wrongAnswer(event) {
+        var elm = event.target;
+        elm.removeEventListener('click', _wrongAnswer, false);
         elm.className += (' wrong');
         setTimeout(function () {
             elm.className = elm.className.replace(' wrong', '');
@@ -90,7 +92,6 @@ define(['_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animP
     function _nextQuestion() {
         _updateScore();
         if (Rounds.isLastQuestion()) {
-            // show answer screen.
             _showAnswer();
         } else {
             Rounds.nextQuestion();
@@ -129,12 +130,12 @@ define(['_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animP
             score: Game.getScore(),
             possibleScore: Game.getMaxScore(),
             tracks: Rounds.getRounds(),
-            url: encodeURIComponent('http://www.gu.com')
+            url: encodeURIComponent(SOCIAL_GU_LINK)
         });
 
-//        _.each(_endWrapper.querySelector('.GI_BL_circular_progress'), function (elm, index) {
-//            elm.addEventListener('click', function () { Audio.playTrack(index, this); }, false);
-//        });
+        _.each(_endWrapper.querySelectorAll('.GI_BL_circular_progress'), function (elm, index) {
+            elm.addEventListener('click', function () { Audio.playTrack(index, this); }, false);
+        });
 
         _endWrapper.style.display = 'block';
     }
