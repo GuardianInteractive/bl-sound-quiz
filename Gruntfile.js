@@ -45,34 +45,6 @@ module.exports = function(grunt) {
             bucket: 'gdn-cdn'
         },
 
-        watch: {
-            sass: {
-                files: 'project/src/v/x/styles/**/*.scss',
-                tasks: 'sass:dev',
-                interrupt: true
-            },
-            data: {
-                files: 'project/src/v/x/data/**/*',
-                tasks: 'dir2json:dev',
-                interrupt: true
-            },
-            files: {
-                files: 'project/src/v/x/files/**/*',
-                tasks: 'copy:filesdev',
-                interrupt: true
-            },
-            root: {
-                files: 'project/src/*.*',
-                tasks: 'copy:rootdev',
-                interrupt: true
-            },
-            js: {
-                files: 'project/src/v/x/js/**',
-                tasks: 'copy:jsdev',
-                interrupt: true
-            }
-        },
-
         jshint: {
             files: ['project/src/v/x/js/**/*.js',
             //exclude these files:
@@ -106,7 +78,6 @@ module.exports = function(grunt) {
 
                     paths: {
                         'Howl': 'js/lib/howler',
-                        'jquery': 'js/lib/jquery',
                         '_': 'js/lib/lodash',
                         'animPoly': 'js/lib/animFramePolyfill'
                     },
@@ -264,6 +235,38 @@ module.exports = function(grunt) {
                 },
                 command:  's3cmd put -r ./build/ s3://gdn-cdn/world/2012/may/10/obama-same-sex-marriage-share/ --guess-mime-type --human-readable-sizes --add-header="Cache-Control:max-age=100" --acl-public'
             }
+        },
+
+        watch: {
+            sass: {
+                files: 'project/src/v/x/styles/**/*.scss',
+                tasks: 'sass:common',
+                interrupt: true
+            },
+            files: {
+                files: 'project/src/v/x/files/**/*',
+                tasks: 'copy:files',
+                interrupt: true
+            },
+            root: {
+                files: [
+                    'project/src/*.*',
+                    'project/src/v/x/js/**',
+                    'project/src/v/x/data/**/*'
+                ],
+                tasks: 'build',
+                interrupt: true
+            }
+        },
+
+        connect: {
+            server: {
+                options: {
+                    port: 9001,
+                    base: 'build',
+                    keepalive: true
+                }
+            }
         }
 
     });
@@ -278,6 +281,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-dir2json');
     grunt.loadNpmTasks('grunt-shell');
     // Guardian Interactive tasks
@@ -290,9 +294,9 @@ module.exports = function(grunt) {
 
     // build task - link, compile, flatten, optimise, copy
     grunt.registerTask('build', [
+        'jshint',
         'clean:build',
         'clean:tmp',
-        'jshint',
         'sass:common',
         'copy:js',
         'dir2json:build',

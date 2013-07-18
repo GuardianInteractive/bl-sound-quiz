@@ -20,6 +20,7 @@
         "require": true,
         "define": true,
         "setTimeout": true,
-        "window": true
+        "window": true,
+        "document": true
     }
 }

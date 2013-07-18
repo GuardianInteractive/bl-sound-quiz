@@ -1,25 +1,25 @@
 /**
  *
  */
-define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animPoly'], function ($, _, Data, Rounds, Audio, Game) {
+define(['_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animPoly'], function (_, Data, Rounds, Audio, Game) {
     'use strict';
 
     var CSS_PATH = '<%= projectUrl %><%= versionDir %>styles/min.css';
-    var _$el = null;
-    var _$sound = null;
-    var _$score = null;
-    var _$question = null;
-    var _$roundCount = null;
-    var _$currentRound = null;
-    var _$roundWrapper = null;
-    var _$answerWrapper = null;
-    var _$endWrapper = null;
+    var _el = null;
+    var _sound = null;
+    var _score = null;
+    var _question = null;
+    var _roundCount = null;
+    var _currentRound = null;
+    var _roundWrapper = null;
+    var _answerWrapper = null;
+    var _endWrapper = null;
     var BUTTON_DELAY = 400;
     var TRANSITION_DELAY = 700;
     var _buttons = null;
 
     function _setSound() {
-        _$sound.bind('click', Audio.playSound);
+        _sound.addEventListener('click', Audio.playSound, false);
     }
 
     function _createQuestion() {
@@ -31,58 +31,60 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
             'answerText3': roundData.options[2]
         });
 
-        _$question.html(template);
+        _question.innerHTML = template;
         _buttons = [];
 
         _.each(roundData.options, function (option, index) {
-            var btn = _$question.find('.GI_BL_answer' + (index + 1));
+            var btn = _question.querySelector('.GI_BL_answer' + (index + 1));
             _buttons.push(btn);
 
             if (roundData.answer === index) {
-                btn.bind('click', function () { _correctAnswer(btn); });
+                btn.addEventListener('click', function () { _correctAnswer(btn); }, false);
             } else {
-                btn.bind('click', function () { _wrongAnswer(btn); });
+                btn.addEventListener('click', function () { _wrongAnswer(btn); }, false);
             }
         });
     }
 
     function _correctAnswer(elm) {
-        _.each(_buttons, function (button) {
-            button.off();
-        });
-        elm.addClass('correct');
+//        _.each(_buttons, function (button) {
+//            // TODO: remove event listeners
+//            //button.removeEventListener();
+//        });
+        elm.className += ' correct';
         Game.correctAnswer();
         setTimeout(_nextQuestion, TRANSITION_DELAY);
     }
 
     function _wrongAnswer(elm) {
-        elm.off();
-        elm.addClass('wrong');
+        // TODO: Remove event listener
+        //elm.off();
+        elm.className += (' wrong');
         setTimeout(function () {
-            elm.removeClass('wrong');
-            elm.addClass('disabled');
+            elm.className = elm.className.replace(' wrong', '');
+            elm.className += ' disabled';
         }, BUTTON_DELAY);
 
         Game.wrongAnswer();
     }
 
     function _showAnswer() {
-        _$roundWrapper.hide();
+        _roundWrapper.style.display = 'none';
         var roundData = Rounds.getRound();
-        _$answerWrapper.html(_.template(Data.answer, {
+        _answerWrapper.innerHTML = _.template(Data.answer, {
                 imageURL: roundData.image,
                 answer: roundData.description
-            }));
-        _$answerWrapper.find('.GI_BL_next').bind('click', _nextRound);
-        _$answerWrapper.show();
+            });
+        _answerWrapper.querySelector('.GI_BL_next').addEventListener('click', _nextRound, false);
+        _answerWrapper.style.display = 'block';
     }
 
     function _updateRoundCount() {
-        _$currentRound.html(Rounds.getCurrentRoundCount());
+        _currentRound.innerHTML = Rounds.getCurrentRoundCount();
     }
 
     function _updateScore() {
-        _$score.html(Game.getScore());
+        _score.innerHTML = Game.getScore();
     }
 
     function _nextQuestion() {
@@ -99,18 +101,18 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
     function _nextRound() {
         Audio.stopSound();
         Rounds.nextRound();
-        _$answerWrapper.hide();
+        _answerWrapper.style.display = 'none';
 
         if (Rounds.isLastRound()) {
             _showResults();
         } else {
-            _$roundWrapper.show();
+            _roundWrapper.style.display = 'block';
             setupRound();
         }
     }
 
     function _showResults() {
-        _$roundWrapper.hide();
+        _roundWrapper.style.display = 'none';
 
         var playerDescriptions = [
             'did you even try?',
@@ -122,53 +124,49 @@ define(['jquery', '_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/gam
                 (Game.getScore() / Game.getMaxScore()) * (playerDescriptions.length - 1)
             );
 
-        console.log(usersDescriptionIndex);
-
-        _$endWrapper.html(_.template(Data.end, {
+        _endWrapper.innerHTML = _.template(Data.end, {
             playerDescription: playerDescriptions[usersDescriptionIndex],
             score: Game.getScore(),
             possibleScore: Game.getMaxScore(),
             tracks: Rounds.getRounds(),
             url: encodeURIComponent('http://www.gu.com')
-        }));
-
-        _.each(_$endWrapper.find('.GI_BL_circular_progress'), function (elm, index) {
-            $(elm).bind('click', function () { Audio.playTrack(index, this); });
         });
 
-        _$endWrapper.show();
+//        _.each(_endWrapper.querySelector('.GI_BL_circular_progress'), function (elm, index) {
+//            elm.addEventListener('click', function () { Audio.playTrack(index, this); }, false);
+//        });
+
+        _endWrapper.style.display = 'block';
     }
 
     function setup(el) {
-        _$el = $(el);
-        _$el.html(Data.scaffolding);
-        _$el.append(Data.audio);
+        _el = el;
+        _el.innerHTML = Data.scaffolding;
 
-        var cssElm = $('<link>', {
-            href: CSS_PATH,
-            rel: 'stylesheet',
-            type: 'text/css'
-        });
-        _$el.append(cssElm);
+        var cssElm = document.createElement('link');
+        cssElm.setAttribute('href', CSS_PATH);
+        cssElm.setAttribute('rel', 'stylesheet');
+        cssElm.setAttribute('type', 'text/css');
+        _el.appendChild(cssElm);
 
-        _$question = _$el.find('.GI_BL_question_wrapper');
-        _$sound = _$el.find('.GL_BL_play_btn');
-        _$roundWrapper = _$el.find('.GI_BL_round_wrapper');
-        _$answerWrapper = _$el.find('.GI_BL_answer_wrapper');
-        _$endWrapper = _$el.find('.GI_BL_end_wrapper');
-        _$score = _$el.find('.GI_BL_score_value');
-        _$roundCount = _$el.find('.GI_BL_total_rounds');
-        _$currentRound = _$el.find('.GI_BL_round_count');
-        _$roundCount.html(Rounds.getRoundCount());
+        _question = _el.querySelector('.GI_BL_question_wrapper');
+        _sound = _el.querySelector('.GL_BL_play_btn');
+        _roundWrapper = _el.querySelector('.GI_BL_round_wrapper');
+        _answerWrapper = _el.querySelector('.GI_BL_answer_wrapper');
+        _endWrapper = _el.querySelector('.GI_BL_end_wrapper');
+        _score = _el.querySelector('.GI_BL_score_value');
+        _roundCount = _el.querySelector('.GI_BL_total_rounds');
+        _currentRound = _el.querySelector('.GI_BL_round_count');
+        _roundCount.innerHTML = Rounds.getRoundCount();
 
         setupRound();
     }
 
     function setupRound() {
-        $('.GL_BL_play_progress').bind('click', function () {
+        _el.querySelector('.GL_BL_play_progress').addEventListener('click', function () {
             Audio.setup(this);
             Audio.playSound();
-        });
+        }, false);
         _setSound();
         _updateScore();
         _createQuestion();

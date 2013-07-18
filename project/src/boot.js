@@ -15,7 +15,6 @@ define([], function() {
                 baseUrl: '<%= projectUrl %><%= versionDir %>'
             };
 
-
             require(cfg, ['js/game']).then(function(Game) {
                 Game.setup(el);
             });
