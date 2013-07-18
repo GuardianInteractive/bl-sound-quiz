@@ -233,7 +233,7 @@ module.exports = function(grunt) {
                     stderr: true,
                     failOnError: true
                 },
-                command:  's3cmd put -r ./build/ s3://gdn-cdn/world/2012/may/10/obama-same-sex-marriage-share/ --guess-mime-type --human-readable-sizes --add-header="Cache-Control:max-age=100" --acl-public'
+                command:  's3cmd sync --delete-removed -r ./build/ s3://gdn-cdn/world/2012/may/10/obama-same-sex-marriage-share/ --guess-mime-type --human-readable-sizes --add-header="Cache-Control:max-age=100" --acl-public'
             }
         },
 
