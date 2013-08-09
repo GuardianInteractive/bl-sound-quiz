@@ -116,9 +116,9 @@ define(['_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animP
         _roundWrapper.style.display = 'none';
 
         var playerDescriptions = [
-            'did you even try?',
-            'so you\'re not completely tone deaf',
-            'you could distinguish a verdi baritone from a baryton-noble'
+            'Hmmm. Might be time to wash your ears out',
+            'Hear hear! Your aural handiwork is sound',
+            'Crikey. You can probably hear butterflies. Have you thought about becoming a piano tuner?'
         ];
 
         var usersDescriptionIndex = Math.round(

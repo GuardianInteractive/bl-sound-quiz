@@ -8,6 +8,9 @@ $edge-border: 10px;
 $sans-font:  'Guardian Sans Web', sans-serif;
 $serif-font: 'Guardian Egyptian Web', serif;
 
+.interactive {
+	margin: 0;
+}
 .GI_BL_wrapper {
 
   * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
@@ -138,6 +141,7 @@ $serif-font: 'Guardian Egyptian Web', serif;
 
     }
     .GI_BL_answer_description {
+			font-family: $serif-font;
       margin: $btn-margin;
       @media (min-width: $break-landscape) {
         position: absolute;
