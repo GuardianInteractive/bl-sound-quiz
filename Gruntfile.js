@@ -31,7 +31,8 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         guid: '00775389-9d61-4e74-b3f8-ce45e8fc7235',
-        baseUrl: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz',
+        articleUrl: 'music/interactive/2013/aug/19/matthew-herbert-quiz',
+        baseUrl: 'http://interactive.guim.co.uk/next-gen/<%= articleUrl %>',
 
         projectPath: '',
         version: 'x',
@@ -233,7 +234,7 @@ module.exports = function(grunt) {
                     stderr: true,
                     failOnError: true
                 },
-                command:  's3cmd sync --delete-removed -r ./build/ s3://gdn-cdn/world/2012/may/10/obama-same-sex-marriage-share/ --guess-mime-type --human-readable-sizes --add-header="Cache-Control:max-age=100" --acl-public'
+                command:  's3cmd sync --delete-removed -r ./build/ s3://gdn-cdn/next-gen/<%= articleUrl %> --guess-mime-type --human-readable-sizes --add-header="Cache-Control:max-age=100" --acl-public'
             }
         },
 
@@ -306,6 +307,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('s3push', [
+        'build,
         'shell:s3'
     ]);
 
