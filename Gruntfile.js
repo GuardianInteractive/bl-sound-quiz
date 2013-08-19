@@ -31,7 +31,7 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         guid: '00775389-9d61-4e74-b3f8-ce45e8fc7235',
-        articleUrl: 'music/interactive/2013/aug/19/matthew-herbert-quiz',
+        articleUrl: 'music/interactive/2013/aug/19/matthew-herbert-quiz/',
         baseUrl: 'http://interactive.guim.co.uk/next-gen/<%= articleUrl %>',
 
         projectPath: '',

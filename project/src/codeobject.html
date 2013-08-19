@@ -6,18 +6,19 @@
 </noscript>
 
 
-<figure class="interactive" data-interactive="http://path/to/interactive/boot.js">
+<figure class="gu-interactive" data-interactive="<%= projectUrl %>/boot.js">
     <p>Dummy fig. content</p>
 </figure>
 
-<script>
-    curl = { apiName: "require", apiContext: window.$namespace };
-</script>
-<script src="<%= projectUrl %><%= versionDir %>js/curl.js"></script>
 
 <script>
-    require(['boot.js'], function(Interactive) {
-        var el = document.querySelector('.interactive');
+	var guiReq = require.config({
+		context: 'interactive',
+		baseUrl: '<%= projectUrl %>'
+	});
+	
+    guiReq(['boot.js'], function(Interactive) {
+        var el = document.querySelector('.gu-interactive');
         var context = window;
         var config = {};
         var mediator = {};
