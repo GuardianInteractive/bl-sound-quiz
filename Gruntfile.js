@@ -307,7 +307,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('s3push', [
-        'build,
+        'build',
         'shell:s3'
     ]);
 
