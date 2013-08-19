@@ -12,12 +12,21 @@ define([], function() {
          **/
         boot: function (el, context, config, mediator) {
             var cfg = {
+                context: 'interactive',
                 baseUrl: '<%= projectUrl %><%= versionDir %>'
             };
 
-            require(cfg, ['js/game']).then(function(Game) {
-                Game.setup(el);
-            });
+            if ( typeof require() === 'function' ) {
+                var req2 = require.config(cfg);
+                req2(['js/game'], function(Game) {
+                    Game.setup(el);
+                });
+            } else {
+                // curl, i.e. next-gen
+                require(cfg, ['js/game']).then(function(Game) {
+                    Game.setup(el);
+                });
+            }
         }
-    };
+    }
 });

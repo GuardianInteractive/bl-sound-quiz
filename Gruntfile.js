@@ -84,8 +84,8 @@ module.exports = function(grunt) {
                     },
 
                     optimize:                   (isDev) ? 'none' : 'uglify2',
-                    useSourceUrl:               (isDev) ? true : false,
-                    wrap:                       (isDev) ? true : false,
+                    useSourceUrl:               (isDev) ? false : false,
+                    wrap:                       (isDev) ? false : false,
                     preserveLicenseComments:    false
                 }
             }
