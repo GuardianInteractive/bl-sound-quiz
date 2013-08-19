@@ -15,7 +15,7 @@ define(['_'], function (_) {
             },
             questions: [
                 {
-                    question: 'What type of liquid is being poured?',
+                    question: 'Which description best fits the type of liquid being poured?',
                     options: ['chemical', 'animal', 'human'],
                     answer: 1
                 },
