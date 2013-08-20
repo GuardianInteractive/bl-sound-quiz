@@ -5,7 +5,7 @@ define(['_', 'data/data', 'js/app/rounds', 'js/app/audio', 'js/app/game', 'animP
     'use strict';
 
     var CSS_PATH = 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/styles/min.css';
-    var SOCIAL_GU_LINK = 'GU-SHORT-CODE';
+    var SOCIAL_GU_LINK = 'http://gu.com/p/3t5fq';
     var _el = null;
     var _sound = null;
     var _score = null;

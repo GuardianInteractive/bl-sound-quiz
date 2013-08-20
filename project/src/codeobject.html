@@ -10,19 +10,9 @@
     <p>Dummy fig. content</p>
 </figure>
 
-
 <script>
-	var guiReq = require.config({
-		context: 'interactive',
-		baseUrl: '<%= projectUrl %>'
-	});
-	
-    guiReq(['boot.js'], function(Interactive) {
+    require(['<%= projectUrl %>boot.js'], function(app) {
         var el = document.querySelector('.gu-interactive');
-        var context = window;
-        var config = {};
-        var mediator = {};
-
-        Interactive.boot(el, context, config, mediator);
+        app.boot(el, {}, window, {}, {});
     });
 </script>
