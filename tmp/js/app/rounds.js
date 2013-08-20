@@ -5,12 +5,12 @@ define(['_'], function (_) {
     var _rounds = [
         {
             description: "A pig's blood is poured into a bucket as part of the butchery process at 'One Pig' in Shoreditch, East London",
-            image: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/images/pigs.jpg',
+            image: './v/x/files/images/pigs.jpg',
             audio: {
                 duration: 17.39,
                 files: {
-                    mp3: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/mp3/2_pig_blood_bucket.mp3',
-                    ogg: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/ogg/2_pig_blood_bucket.ogg'
+                    mp3: './v/x/files/audio/mp3/2_pig_blood_bucket.mp3',
+                    ogg: './v/x/files/audio/ogg/2_pig_blood_bucket.ogg'
                 }
             },
             questions: [
@@ -33,12 +33,12 @@ define(['_'], function (_) {
         },
         {
             description: 'Matthew Herbert blows through a copy of The Prevention of Terrorism Act in the Houses of Parliament in June, 2008',
-            image: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/images/parliament.jpg',
+            image: './v/x/files/images/parliament.jpg',
             audio: {
                 duration: 32.15,
                 files: {
-                    mp3: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/mp3/5_the_prevention_of_terrorism.mp3',
-                    ogg: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/ogg/5_the_prevention_of_terrorism.ogg'
+                    mp3: './v/x/files/audio/mp3/5_the_prevention_of_terrorism.mp3',
+                    ogg: './v/x/files/audio/ogg/5_the_prevention_of_terrorism.ogg'
                 }
             },
             questions: [
@@ -61,12 +61,12 @@ define(['_'], function (_) {
         },
         {
             description: "Israeli IDF soldiers shoot at unarmed protestors against a wall, recorded by Waleed Agel",
-            image: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/images/palestine.jpg',
+            image: './v/x/files/images/palestine.jpg',
             audio: {
                 duration: 1.88,
                 files: {
-                    mp3: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/mp3/1_gun_shots.mp3',
-                    ogg: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/ogg/1_gun_shots.ogg'
+                    mp3: './v/x/files/audio/mp3/1_gun_shots.mp3',
+                    ogg: './v/x/files/audio/ogg/1_gun_shots.ogg'
                 }
             },
             questions: [
@@ -89,12 +89,12 @@ define(['_'], function (_) {
         },
 				{
 					description: "A loaf of Hovis bread being opened in Whitstable, September 2011",
-					image: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/images/hovis.jpg',
+					image: './v/x/files/images/hovis.jpg',
 					audio: {
 						duration: 5.85,
             files: {
-                mp3: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/mp3/4_hovis.mp3',
-                ogg: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/ogg/4_hovis.ogg'
+                mp3: './v/x/files/audio/mp3/4_hovis.mp3',
+                ogg: './v/x/files/audio/ogg/4_hovis.ogg'
             }
 					},
 					questions: [
@@ -117,12 +117,12 @@ define(['_'], function (_) {
 				},
         {
             description: "A pig's lungs are bashed to extract blood as part of the butchery process at 'One Pig' in Shoreditch, East London",
-            image: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/images/pigs.jpg',
+            image: './v/x/files/images/pigs.jpg',
             audio: {
                 duration: 23.30,
                 files: {
-                    mp3: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/mp3/3_pigs_lungs_beaten.mp3',
-                    ogg: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/audio/ogg/3_pigs_lungs_beaten.ogg'
+                    mp3: './v/x/files/audio/mp3/3_pigs_lungs_beaten.mp3',
+                    ogg: './v/x/files/audio/ogg/3_pigs_lungs_beaten.ogg'
                 }
             },
             questions: [
