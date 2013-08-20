@@ -60,7 +60,7 @@ define(['_'], function (_) {
             ]
         },
         {
-            description: "Israeli IDF soldiers shoot at unarmed protestors against a wall, recorded by Waleed Agel",
+            description: "Shots fired by soldiers from Israel's IDF, recorded by Waleed Agel",
             image: 'http://interactive.guim.co.uk/next-gen/music/interactive/2013/aug/19/matthew-herbert-quiz/v/x/files/images/palestine.jpg',
             audio: {
                 duration: 1.88,
