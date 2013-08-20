@@ -84,8 +84,6 @@ module.exports = function(grunt) {
                     },
 
                     optimize:                   (isDev) ? 'none' : 'uglify2',
-                    useSourceUrl:               (isDev) ? false : false,
-                    wrap:                       (isDev) ? false : false,
                     preserveLicenseComments:    false
                 }
             }
@@ -129,6 +127,17 @@ module.exports = function(grunt) {
                 options: {
                     processContent: buildTagReplacer
                 }
+            },
+            html: {
+                files: [{
+                    expand: true,
+                    cwd: 'project/src/v/x/data/',
+                    src: ['*.html'],
+                    dest: 'tmp/html'
+                }],
+                options: {
+                    processContent: buildTagReplacer
+                }
             }
         },
 
@@ -146,7 +155,7 @@ module.exports = function(grunt) {
         // Combine contents of `project/src/v/x/data` into a single `data.json` file
         dir2json: {
             build: {
-                root: 'project/src/v/x/data/',
+                root: 'tmp/html/',
                 dest: 'tmp/data/data.js',
                 options: {
                     space: '\t',
@@ -300,6 +309,7 @@ module.exports = function(grunt) {
         'clean:tmp',
         'sass:common',
         'copy:js',
+        'copy:html',
         'dir2json:build',
         'requirejs',
         'copy:root',
