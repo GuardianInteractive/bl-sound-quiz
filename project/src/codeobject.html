@@ -10,10 +10,10 @@
     <p>Dummy fig. content</p>
 </figure>
 
-        <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.8/require.min.js"></script>
+<!-- Expects requirejs to be present in the R2 page -->
 <script>
     require(['<%= projectUrl %>boot.js'], function(app) {
         var el = document.querySelector('.gu-interactive');
-        app.boot(el, {}, window, {}, {});
+        app.boot(el, window, {}, {});
     });
 </script>
